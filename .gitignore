@@ -28,5 +28,11 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
+# JS bundling / minification
+*.min.js
+*.min.css
+*.bundle.js
+*.map
+
 # Visual Studio 2015
 .vs/
