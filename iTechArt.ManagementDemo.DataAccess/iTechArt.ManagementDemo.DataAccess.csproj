@@ -4,4 +4,35 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20190503173639_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190504131304_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190504132510_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190504161606_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190504162502_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190504163028_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190504170039_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190505094652_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190505095117_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190506093020_InitialCreate.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\iTechArt.ManagementDemo.Entities\iTechArt.ManagementDemo.Entities.csproj" />
+    <ProjectReference Include="..\iTechArt.ManagementDemo.Querying\iTechArt.ManagementDemo.Querying.csproj" />
+  </ItemGroup>
+
 </Project>

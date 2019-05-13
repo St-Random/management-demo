@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\iTechArt.ManagementDemo.DataAccess\iTechArt.ManagementDemo.DataAccess.csproj" />
+    <ProjectReference Include="..\iTechArt.ManagementDemo.Entities\iTechArt.ManagementDemo.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
