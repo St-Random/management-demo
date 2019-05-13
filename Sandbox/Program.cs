@@ -10,9 +10,6 @@ using iTechArt.ManagementDemo.Querying.Sort;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace Sandbox
 {
@@ -28,20 +25,12 @@ namespace Sandbox
                     AppDomain.CurrentDomain.GetAssemblies())
                 .BuildServiceProvider();
 
-            //var companiesRepo = serviceProvider
-            //    .GetRequiredService<IRepository<Company>>();
-            //var locationsRepo = serviceProvider
-            //    .GetRequiredService<IRepository<Location>>();
+            Console.WriteLine(" Applying migrations & seeding db...");
+            // Migration & seed
+            var context = serviceProvider.GetRequiredService<DbContext>();
+            context.Database.Migrate();
 
-            //var context = serviceProvider.GetService<DbContext>();
-
-            //var query = context.Set<Location>()
-            //    .Select(l => new CompanyLocationModel { Id = l.Id, EmployeesCount = l.Employees.Count, Name = l.Name });
-            //query = query //.Where(l => l.EmployeesCount > 150)
-            //    .Where(l => l.Name.ToUpper().Contains("A"));
-            //query = query.OrderBy(e => e.EmployeesCount);
-            //query = query.Skip(1).Take(10);
-            //var testData = query.ToListAsync().Result;
+            Console.WriteLine(" Finished.");
 
             var unitOfWork = serviceProvider
                 .GetRequiredService<IUnitOfWork>();
@@ -75,7 +64,7 @@ namespace Sandbox
                     }
                 };
 
-            var employees = queryHandler.QueryAsync(
+            var employees = queryHandler.Query(
                 new QueryOptions
                 {
                     SearchOptions = searchOptions,
@@ -86,24 +75,12 @@ namespace Sandbox
                             ItemsPerPage = 30,
                             Page = 1
                         }
-                }).Result;
+                });
 
-            //var company = new Company { Name = "Test3", Comment = "Validation test", Phone = "404", Locations = new List<Location>() };
-            //company.Locations.Add(new Location { Name = "Test location", Address = new Address { Country = "Belarus", Area = "Minskaya Voblast", City = "Minsk", AddressLine1 = "10, Tolstoyevskogo st.", PostalCode = "220002" } });
-            //companiesRepo.Add(company);
-            //var company = companiesRepo.Find(1);
-
-            //foreach (var location in company.Locations)
-            //{
-            //    Console.WriteLine(location.Employees.Count);
-            //}
-
-            //Console.WriteLine(company.Locations.Sum(l => l.Employees.Count));
-
-            Console.WriteLine("So far so good...");
-            Console.ReadKey();
-
-            unitOfWork.SaveChanges();
+            foreach (var emp in employees.Items)
+            {
+                Console.WriteLine($" {emp.Id}; {emp.Sex}; {emp.FirstName};");
+            }
 
             Console.WriteLine(" [x] Finished. Press any key to continue...");
             Console.ReadKey();
