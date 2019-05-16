@@ -8,7 +8,9 @@ namespace iTechArt.ManagementDemo.DataAccess.Configuration
     {
         public QueryModelsMappingProfile()
         {
-            CreateMap<Company, CompanyModel>();
+            CreateMap<Company, CompanyQueryModel>();
+
+            CreateMap<Company, NamedQueryModel>();
 
             CreateMap<Location, CompanyLocationModel>()
                 .ForMember(
@@ -23,6 +25,8 @@ namespace iTechArt.ManagementDemo.DataAccess.Configuration
                 .ForMember(
                     cl => cl.PostalCode,
                     opt => opt.MapFrom(l => l.Address.PostalCode));
+
+            CreateMap<Location, NamedQueryModel>();
 
             CreateMap<Employee, LocationEmployeeModel>()
                 .ForMember(
@@ -39,7 +43,7 @@ namespace iTechArt.ManagementDemo.DataAccess.Configuration
                     opt => opt.MapFrom(
                         e => (Querying.Models.Sex)e.Sex));
 
-            CreateMap<Employee, EmployeeModel>()
+            CreateMap<Employee, EmployeeQueryModel>()
                 .ForMember(
                     e => e.LocationName,
                     opt => opt.MapFrom(e => e.Location.Name))

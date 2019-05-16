@@ -16,6 +16,7 @@ namespace iTechArt.ManagementDemo.DataAccess.Configuration
             services
                 .ConfigureEFDbContext(
                     connectionString, shouldLogQueries)
+                .ConfigureEFMigrations()
                 .ConfigureEFUnitOfWork()
                 .ConfigureEFRepositories()
                 .ConfigureEFQueryHandlers();
@@ -43,6 +44,11 @@ namespace iTechArt.ManagementDemo.DataAccess.Configuration
 #pragma warning restore CS0618 // Type or member is obsolete
                         }
                     });
+
+        private static IServiceCollection ConfigureEFMigrations(
+            this IServiceCollection services) =>
+            services
+                .AddTransient<IMigrationHandler, EFMigrationHandler>();
 
         private static IServiceCollection ConfigureEFUnitOfWork(
             this IServiceCollection services) =>

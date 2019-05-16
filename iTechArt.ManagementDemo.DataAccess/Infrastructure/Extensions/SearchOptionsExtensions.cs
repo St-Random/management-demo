@@ -2,9 +2,7 @@
 using iTechArt.ManagementDemo.Querying.Abstractions;
 using iTechArt.ManagementDemo.Querying.Search;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace iTechArt.ManagementDemo.DataAccess.Infrastructure.Extensions
 {
@@ -31,7 +29,7 @@ namespace iTechArt.ManagementDemo.DataAccess.Infrastructure.Extensions
                 {
                     PropertyNames = options.PropertyNames
                         .Where(
-                            opt => propertiesToSearch.Contains(opt))
+                            name => propertiesToSearch.Contains(name))
                         .ToList(),
                     Term = options.Term ?? string.Empty
                 };

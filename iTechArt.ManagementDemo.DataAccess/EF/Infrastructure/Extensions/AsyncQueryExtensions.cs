@@ -22,6 +22,8 @@ namespace iTechArt.ManagementDemo.DataAccess.EF.Infrastructure.Extensions
                 int maxItemsPerPage = 100)
                 where TModel : IQueryModel
         {
+            options = options ?? new QueryOptions();
+
             query = query.ApplyOptions(
                 options.SearchOptions, out var searchOptions);
 
