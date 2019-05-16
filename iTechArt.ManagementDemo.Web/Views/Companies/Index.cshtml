@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<div id="test" class="table-striped table-bordered">
+</div>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            var table = new Tabulator("#test", {
+                ajaxURL: "@Url.Action("List")",
+                ajaxConfig: "PUT",
+                ajaxContentType: {
+                    headers: {
+                        "Content-type": "application/json; charset=utf-8", //set specific content type
+                        "Accept": "application/json"
+                    },
+                    body: function (url, config, params) {
+                        console.log(url);
+                        console.log(config);
+                        console.log(params);
+
+                        return params;
+                    }
+                },
+                ajaxResponse: function (url, params, response) {
+                    return response.items;
+                },
+                layout: "fitColumns", //fit columns to width of table (optional)
+                columns: [ //Define Table Columns
+                    { title: "Name", field: "name" },
+                    { title: "Company Code", field: "companyCode"},
+                    { title: "Date Founded", field: "dateFounded" }
+                ],
+                rowClick: function (e, row) { //trigger an alert message when the row is clicked
+                    alert("Row " + row.getData().id + " Clicked!!!!");
+                },
+            });
+        });
+    </script>
+}

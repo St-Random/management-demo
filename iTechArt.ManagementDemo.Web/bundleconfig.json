@@ -1,0 +1,33 @@
+[
+  {
+    "outputFileName": "wwwroot/css/output.min.css",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/dist/css/",
+      "wwwroot/lib/tabulator/dist/css/bootstrap/tabulator_bootstrap4.css",
+      "wwwroot/lib/easy-autocomplete/dist/css/",
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/output.min.js",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/dist/bootstrap.js",
+      "wwwroot/lib/jquery/dist/jquery.js",
+      "wwwroot/lib/jquery/dist/jquery.js",
+      "wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "wwwroot/lib/tabulator/dist/js/tabulator_core.js",
+      "wwwroot/lib/tabulator/dist/js/tabulator.js",
+      "wwwroot/lib/tabulator/dist/js/modules",
+      "wwwroot/lib/easy-autocomplete/dist/js/",
+      "wwwroot/js/site.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": true,
+    "includeInProject": true
+  }
+]
