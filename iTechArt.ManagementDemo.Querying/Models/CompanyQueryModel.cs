@@ -4,7 +4,7 @@ using System;
 
 namespace iTechArt.ManagementDemo.Querying.Models
 {
-    public class CompanyModel : IQueryModel
+    public class CompanyQueryModel : IQueryModel
     {
         public int Id { get; set; }
 
