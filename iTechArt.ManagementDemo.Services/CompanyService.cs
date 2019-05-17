@@ -7,6 +7,7 @@ using iTechArt.ManagementDemo.Services.DTO;
 using iTechArt.ManagementDemo.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.Services
@@ -16,6 +17,8 @@ namespace iTechArt.ManagementDemo.Services
     {
         private readonly IQueryHandler<Company, CompanyQueryModel>
             _queryHandler;
+        private readonly IQueryHandler<Company, NamedQueryModel>
+            _namedQueryHandler;
         private readonly IQueryHandler<Location, CompanyLocationModel>
             _locationQueryHandler;
         private readonly IQueryHandler<Employee, CompanyEmployeeModel>
@@ -27,12 +30,15 @@ namespace iTechArt.ManagementDemo.Services
             IUnitOfWork unitOfWork,
             IRepository<Company> repository,
             IQueryHandler<Company, CompanyQueryModel> queryHandler,
+            IQueryHandler<Company, NamedQueryModel> namedQueryHandler,
             IQueryHandler<Location, CompanyLocationModel> locationQueryHandler,
             IQueryHandler<Employee, CompanyEmployeeModel> employeeQueryHandler,
             ILogger<CompanyService> logger = null)
             : base(mapper, unitOfWork, repository, logger)
         {
             _queryHandler = queryHandler
+                ?? throw new NullReferenceException();
+            _namedQueryHandler = namedQueryHandler
                 ?? throw new NullReferenceException();
             _employeeQueryHandler = employeeQueryHandler
                 ?? throw new NullReferenceException();
@@ -54,5 +60,8 @@ namespace iTechArt.ManagementDemo.Services
             QueryEmployeesAsync(int companyId, IQueryOptions options) =>
             await _employeeQueryHandler.QueryAsync(
                 options, e => e.Location.CompanyId == companyId);
+
+        public async Task<IEnumerable<NamedQueryModel>> GetCompaniesIndex() =>
+            await _namedQueryHandler.GetAsync();
     }
 }

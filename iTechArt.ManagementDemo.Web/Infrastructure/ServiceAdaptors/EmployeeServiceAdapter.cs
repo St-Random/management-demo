@@ -6,7 +6,6 @@ using iTechArt.ManagementDemo.Services.Interfaces;
 using iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors.Interfaces;
 using iTechArt.ManagementDemo.Web.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors
@@ -30,14 +29,6 @@ namespace iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors
         public async Task<IQueryResult<EmployeeQueryModel>> QueryAsync(
             IQueryOptions options) =>
             await _service.QueryAsync(options);
-
-        public async Task<IEnumerable<NamedQueryModel>>
-            GetCompaniesAvailableForTransferAsync() =>
-            await _service.GetCompaniesAvailableForTransferAsync();
-
-        public async Task<IEnumerable<NamedQueryModel>>
-            GetLocationsAvailableForTransferAsync(int companyId) =>
-            await _service.GetLocationsAvailableForTransferAsync(companyId);
 
     }
 }

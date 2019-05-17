@@ -32,9 +32,8 @@ namespace iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors
             await _service.QueryEmployeesAsync(locationId, options);
 
         public async Task<IEnumerable<NamedQueryModel>>
-            GetLocationsAvailableForTransferAsync(int sourceLocationId) =>
-            await _service.GetLocationsAvailableForTransferAsync(
-                sourceLocationId);
+            GetLocationsIndex(int companyId) =>
+            await _service.GetLocationsIndex(companyId);
 
         public async Task<int?> CloneLocationAsync(
             int sourceLocationId, bool shouldTransferEmployeesFromSource) =>

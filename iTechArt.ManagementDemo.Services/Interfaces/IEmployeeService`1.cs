@@ -9,9 +9,5 @@ namespace iTechArt.ManagementDemo.Services.Interfaces
     {
         Task<IQueryResult<EmployeeQueryModel>> QueryAsync(
             IQueryOptions options);
-        Task<IEnumerable<NamedQueryModel>>
-            GetCompaniesAvailableForTransferAsync();
-        Task<IEnumerable<NamedQueryModel>>
-            GetLocationsAvailableForTransferAsync(int companyId);
     }
 }

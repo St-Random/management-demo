@@ -10,7 +10,7 @@ namespace iTechArt.ManagementDemo.Services.Interfaces
         Task<IQueryResult<LocationEmployeeModel>> QueryEmployeesAsync(
             int locationId, IQueryOptions options);
         Task<IEnumerable<NamedQueryModel>>
-            GetLocationsAvailableForTransferAsync(int sourceLocationId);
+            GetLocationsIndex(int companyId);
 
         Task<int?> CloneLocationAsync(
             int sourceLocationId,

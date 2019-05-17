@@ -17,10 +17,6 @@ namespace iTechArt.ManagementDemo.Services
     {
         private readonly IQueryHandler<Employee, EmployeeQueryModel>
             _queryHandler;
-        private readonly IQueryHandler<Company, NamedQueryModel>
-            _companyQueryHandler;
-        private readonly IQueryHandler<Location, NamedQueryModel>
-            _locationQueryHandler;
 
 
         public EmployeeService(
@@ -28,16 +24,10 @@ namespace iTechArt.ManagementDemo.Services
             IUnitOfWork unitOfWork,
             IRepository<Employee> repository,
             IQueryHandler<Employee, EmployeeQueryModel> queryHandler,
-            IQueryHandler<Company, NamedQueryModel> companyQueryHandler,
-            IQueryHandler<Location, NamedQueryModel> locationQueryHandler,
             ILogger<EmployeeService> logger = null)
             : base(mapper, unitOfWork, repository, logger)
         {
             _queryHandler = queryHandler
-                ?? throw new NullReferenceException();
-            _companyQueryHandler = companyQueryHandler
-                ?? throw new NullReferenceException();
-            _locationQueryHandler = locationQueryHandler
                 ?? throw new NullReferenceException();
         }
 
@@ -46,13 +36,5 @@ namespace iTechArt.ManagementDemo.Services
             IQueryOptions options) =>
             await _queryHandler.QueryAsync(options);
 
-        public async Task<IEnumerable<NamedQueryModel>>
-            GetCompaniesAvailableForTransferAsync() =>
-            await _companyQueryHandler.GetAsync();
-
-        public async Task<IEnumerable<NamedQueryModel>>
-            GetLocationsAvailableForTransferAsync(int companyId) =>
-            await _locationQueryHandler.GetAsync(
-                l => l.CompanyId == companyId);
     }
 }

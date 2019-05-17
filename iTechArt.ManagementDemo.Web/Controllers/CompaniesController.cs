@@ -74,5 +74,9 @@ namespace iTechArt.ManagementDemo.Web.Controllers
         public async Task<IActionResult> Employees(
             int id, QueryOptions options) =>
             Ok(await _service.QueryEmployeesAsync(id, null));
+
+        [HttpGet]
+        public async Task<IActionResult> Autocomplete() =>
+            Ok(await _service.GetCompaniesIndex());
     }
 }

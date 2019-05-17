@@ -70,15 +70,5 @@ namespace iTechArt.ManagementDemo.Web.Controllers
             [FromBody]QueryOptionsModel options) =>
             Ok(await _service.QueryAsync(options));
 
-        [HttpGet]
-        [ActionName("transfer-companies")]
-        public async Task<IActionResult> TransferCompanies() =>
-            Ok(await _service.GetCompaniesAvailableForTransferAsync());
-
-        [HttpGet]
-        [ActionName("transfer-locations")]
-        public async Task<IActionResult> TransferLocations(int companyId) =>
-            Ok(await _service
-                .GetLocationsAvailableForTransferAsync(companyId));
     }
 }

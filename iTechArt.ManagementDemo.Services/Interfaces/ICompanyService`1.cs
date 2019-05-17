@@ -1,5 +1,6 @@
 ﻿using iTechArt.ManagementDemo.Querying;
 using iTechArt.ManagementDemo.Querying.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.Services.Interfaces
@@ -12,5 +13,7 @@ namespace iTechArt.ManagementDemo.Services.Interfaces
             int companyId, IQueryOptions options);
         Task<IQueryResult<CompanyEmployeeModel>> QueryEmployeesAsync(
             int companyId, IQueryOptions options);
+        Task<IEnumerable<NamedQueryModel>>
+            GetCompaniesIndex();
     }
 }

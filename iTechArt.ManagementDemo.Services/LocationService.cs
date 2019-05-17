@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.Services
@@ -20,7 +19,7 @@ namespace iTechArt.ManagementDemo.Services
         private readonly IQueryHandler<Employee, LocationEmployeeModel>
             _employeeQueryHandler;
         private readonly IQueryHandler<Location, NamedQueryModel>
-            _locationQueryHandler;
+            _namedQueryHandler;
 
 
         public LocationService(
@@ -29,13 +28,13 @@ namespace iTechArt.ManagementDemo.Services
             IRepository<Location> repository,
             IQueryHandler<Employee, LocationEmployeeModel>
                 employeeQueryHandler,
-            IQueryHandler<Location, NamedQueryModel> locationQueryHandler,
+            IQueryHandler<Location, NamedQueryModel> namedQueryHandler,
             ILogger<LocationService> logger = null)
             : base(mapper, unitOfWork, repository, logger)
         {
             _employeeQueryHandler = employeeQueryHandler
                 ?? throw new NullReferenceException();
-            _locationQueryHandler = locationQueryHandler
+            _namedQueryHandler = namedQueryHandler
                 ?? throw new NullReferenceException();
         }
 
@@ -46,21 +45,9 @@ namespace iTechArt.ManagementDemo.Services
                 options, e => e.LocationId == locationId);
 
         public async Task<IEnumerable<NamedQueryModel>>
-            GetLocationsAvailableForTransferAsync(int sourceLocationId)
-        {
-            var sourceLocation = await _repository.FindAsync(sourceLocationId);
-
-            if (sourceLocation == null)
-            {
-                return Enumerable.Empty<NamedQueryModel>();
-            }
-
-            var companyId = sourceLocation.CompanyId;
-
-            return await _locationQueryHandler
-                .GetAsync(l => l.CompanyId == companyId
-                    && l.Id != sourceLocationId);
-        }
+            GetLocationsIndex(int companyId) =>
+            await _namedQueryHandler.GetAsync(
+                l => l.CompanyId == companyId);
 
 
         public async Task<int?> CloneLocationAsync(

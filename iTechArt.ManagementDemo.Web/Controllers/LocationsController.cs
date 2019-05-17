@@ -96,8 +96,7 @@ namespace iTechArt.ManagementDemo.Web.Controllers
             Ok(await _service.QueryEmployeesAsync(id, options));
 
         [HttpGet]
-        [ActionName("transfer-location")]
-        public async Task<IActionResult> TransferLocations(int id) =>
-            Ok(await _service.GetLocationsAvailableForTransferAsync(id));
+        public async Task<IActionResult> Autocomplete(int companyId) =>
+            Ok(await _service.GetLocationsIndex(companyId));
     }
 }

@@ -6,6 +6,7 @@ using iTechArt.ManagementDemo.Services.Interfaces;
 using iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors.Interfaces;
 using iTechArt.ManagementDemo.Web.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors
@@ -37,5 +38,8 @@ namespace iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors
         public async Task<IQueryResult<CompanyLocationModel>>
             QueryLocationsAsync(int companyId, IQueryOptions options) =>
             await _service.QueryLocationsAsync(companyId, options);
+
+        public async Task<IEnumerable<NamedQueryModel>> GetCompaniesIndex() =>
+            await _service.GetCompaniesIndex();
     }
 }
