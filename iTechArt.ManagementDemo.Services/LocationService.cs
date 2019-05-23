@@ -49,7 +49,6 @@ namespace iTechArt.ManagementDemo.Services
             await _namedQueryHandler.GetAsync(
                 l => l.CompanyId == companyId);
 
-
         public async Task<int?> CloneLocationAsync(
             int sourceLocationId, bool shouldTransferEmployeesFromSource)
         {
@@ -73,6 +72,8 @@ namespace iTechArt.ManagementDemo.Services
 
                 if (shouldTransferEmployeesFromSource)
                 {
+                    clonedLocation.Employees = new List<Employee>();
+
                     foreach (var employee in source.Employees)
                     {
                         clonedLocation.Employees.Add(employee);
@@ -134,6 +135,22 @@ namespace iTechArt.ManagementDemo.Services
             {
                 transaction.Rollback();
                 throw;
+            }
+        }
+
+        public async Task<int?> TryDeleteLocationAndGetCompanyIdAsync(int id)
+        {
+            try
+            {
+                var location = await _repository.FindAsync(id);
+
+                _repository.Remove(location);
+
+                return location?.CompanyId;
+            }
+            finally
+            {
+                await _unitOfWork.SaveChangesAsync();
             }
         }
     }

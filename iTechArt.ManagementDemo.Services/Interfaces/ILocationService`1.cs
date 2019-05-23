@@ -12,6 +12,7 @@ namespace iTechArt.ManagementDemo.Services.Interfaces
         Task<IEnumerable<NamedQueryModel>>
             GetLocationsIndex(int companyId);
 
+        Task<int?> TryDeleteLocationAndGetCompanyIdAsync(int id);
         Task<int?> CloneLocationAsync(
             int sourceLocationId,
             bool shouldTransferEmployeesFromSource);

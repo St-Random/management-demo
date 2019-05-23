@@ -1,14 +1,8 @@
 ﻿using iTechArt.ManagementDemo.DataAccess.Infrastructure.Extensions;
 using iTechArt.ManagementDemo.Querying;
 using iTechArt.ManagementDemo.Querying.Abstractions;
-using iTechArt.ManagementDemo.Querying.Pagination;
-using iTechArt.ManagementDemo.Querying.Search;
-using iTechArt.ManagementDemo.Querying.Sort;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.DataAccess.EF.Infrastructure.Extensions

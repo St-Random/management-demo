@@ -48,5 +48,9 @@ namespace iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors
                 sourceLocationId,
                 destinationLocationId,
                 shouldDeleteSourceAfterTransfer);
+
+        public async Task<int?>
+            TryDeleteLocationAndGetCompanyIdAsync(int id) =>
+            await _service.TryDeleteLocationAndGetCompanyIdAsync(id);
     }
 }

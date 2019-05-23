@@ -25,12 +25,12 @@ namespace Sandbox
                     AppDomain.CurrentDomain.GetAssemblies())
                 .BuildServiceProvider();
 
-            Console.WriteLine(" Applying migrations & seeding db...");
-            // Migration & seed
-            var context = serviceProvider.GetRequiredService<DbContext>();
-            context.Database.Migrate();
+            //Console.WriteLine(" Applying migrations & seeding db...");
+            //// Migration & seed
+            //var context = serviceProvider.GetRequiredService<DbContext>();
+            //context.Database.Migrate();
 
-            Console.WriteLine(" Finished.");
+            //Console.WriteLine(" Finished.");
 
             var unitOfWork = serviceProvider
                 .GetRequiredService<IUnitOfWork>();
@@ -44,7 +44,8 @@ namespace Sandbox
                     PropertyNames =
                         new string[]
                         {
-                            "FirstName"
+                            "FirstName",
+                            "LastName"
                         },
                     Term = "10"
                 };
@@ -75,7 +76,8 @@ namespace Sandbox
                             ItemsPerPage = 30,
                             Page = 1
                         }
-                });
+                },
+                x => x.LocationId == 1);
 
             foreach (var emp in employees.Items)
             {

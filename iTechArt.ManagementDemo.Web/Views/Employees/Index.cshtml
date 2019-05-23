@@ -1,77 +1,28 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    var breadCrumbs =
+        new KeyValuePair<string, string>[]
+        {
+            KeyValuePair.Create(
+                Url.Action("Index"), "Employees")
+        };
+
+    ViewData["Title"] = "Employees";
+    ViewData["BreadCrumbs"] = breadCrumbs;
+
+    var dataUrl = Url.Action("List");
+    var dataNavUrl = Url.Action("Details", new { id = 0 });
 }
 
-<h2>Index</h2>
+<partial name="_SearchTable" model="
+         new SearchTableViewModel<EmployeeQueryModel>(dataUrl, dataNavUrl)" />
 
-<div id="test" class="table-striped table-bordered">
-</div>
-
-@section Scripts
+@section Controls
 {
-    <script>
-        $(function () {
-            var table = new Tabulator("#test", {
-                ajaxURL: "@Url.Action("List")",
-                ajaxConfig: "PUT",
-                ajaxContentType: {
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8", //set specific content type
-                        "Accept": "application/json, text/javascript, */*; q=0.01"
-                    },
-                    body: function (url, config, params) {
-                        // console.log(url);
-                        // console.log(config);
-                        console.log(params);
+<div class="btn-toolbar mt-4" role="toolbar">
+    <div class="btn-group mr-auto"></div>
 
-                        let options = {
-                            //"searchOptions": null,
-                            "sortOptions": params.sorters
-                                .map(x => ({
-                                    "propertyName": x.field.charAt(0).toUpperCase()
-                                        + x.field.slice(1),
-                                    "sortDirection":
-                                        x.dir == "asc" ? "Ascending" : "Descending"
-                                })),
-                            "paginationOptions": {
-                                "page": params.page,
-                                "itemsPerPage": params.size
-                            }
-                        };
-
-                        console.log(options);
-
-                        return JSON.stringify(options);
-                    }
-                },
-                ajaxResponse: function (url, params, response) {
-                    let options = response.options || {};
-                    let paginationOptions = options
-                        .paginationOptions || {};
-                    let lastPage = Math.ceil((response.totalCount
-                        / paginationOptions.itemsPerPage) || 1);
-
-                    console.log(response);
-                    return {
-                        "data": response.items,
-                        "last_page": Math.ceil(lastPage)
-                    }
-                },
-                ajaxSorting: true,
-                pagination: "remote",
-                paginationSize: 10,
-                paginationSizeSelector: [5, 10, 15, 20, 25],
-                layout: "fitColumns", //fit columns to width of table (optional)
-                columns: [ //Define Table Columns
-                    { title: "First Name", field: "firstName" },
-                    { title: "Sex", field: "sex"},
-                    { title: "Gender", field: "gender" }
-                ],
-                rowClick: function (e, row) { //trigger an alert message when the row is clicked
-                    alert("Row " + row.getData().id + " Clicked!!!!");
-                },
-            });
-        });
-    </script>
+    <form method="post" asp-action="Create">
+        <button type="submit" class="btn btn-primary mr-1">Create New</button>
+    </form>
+</div>
 }

@@ -1,0 +1,49 @@
+﻿@model ISearchTableViewModel
+@inject Microsoft.Extensions.Options.IOptions<MvcJsonOptions> options
+
+@{
+    var searchColumns = Model.GetSearchColumns();
+    var tableEntries = JsonConvert
+        .SerializeObject(
+            Model.GetTableEntries(),
+            options.Value.SerializerSettings);
+}
+
+<div class="row mt-3" data-search-table-group>
+    <div class="col-md-8">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search Term"
+                   data-search-input />
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button"
+                        data-search-button>
+                    Search
+                </button>
+                <button class="btn btn-outline-primary" type="button"
+                        title="Search Settings"
+                        data-search-settings-button>☰</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12" data-search-settings style="display: none;">
+        <span class="pl-1">Search in:</span>
+        <div class="form-inline border border-light p-1 mb-3">
+            @foreach (var item in searchColumns)
+            {
+                <div class="custom-control custom-checkbox mr-2">
+                    <input type="checkbox" class="custom-control-input"
+                           checked name="@item.Key" id="Search_@(Model.ModelType)_@item.Key">
+                    <label class="custom-control-label" for="Search_@(Model.ModelType)_@item.Key">@item.Value</label>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div data-search-table="@tableEntries"
+             data-url="@Model.DataUrl"
+             data-nav-url="@Model.NavigationUrl"
+             class="table-striped table-bordered mb-3"
+             role="list">
+        </div>
+    </div>
+</div>

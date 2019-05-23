@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using iTechArt.ManagementDemo.Web.Models;
 using iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors.Interfaces;
 using iTechArt.ManagementDemo.Web.Infrastructure.Filters;
-using FluentValidation.AspNetCore;
-using iTechArt.ManagementDemo.Querying;
+using iTechArt.ManagementDemo.Web.Infrastructure.Validators.Attributes;
 
 namespace iTechArt.ManagementDemo.Web.Controllers
 {
@@ -33,17 +28,29 @@ namespace iTechArt.ManagementDemo.Web.Controllers
 
         [HttpGet]
         [TreatNullAsNotFound]
-        [RuleSetForClientSideMessages("ClientCompatible")]
+        [UseClientSideCompatibleValidation]
         public async Task<IActionResult> Edit(int id) =>
             View(await _service.FindAsync(id));
 
         [HttpPost]
-        [RuleSetForClientSideMessages("ClientCompatible")]
-        public IActionResult Create() =>
-            View(nameof(Edit), new CompanyModel());
+        [UseClientSideCompatibleValidation]
+        public IActionResult Create(
+            int companyId = 0,
+            string companyName = null,
+            int locationId = 0,
+            string locationName = null) =>
+            View(
+                nameof(Edit),
+                new EmployeeModel
+                {
+                    CompanyId = companyId,
+                    CompanyName = companyName,
+                    LocationId = locationId,
+                    LocationName = locationName
+                });
 
         [HttpPost, ValidateAntiForgeryToken]
-        [RuleSetForClientSideMessages("ClientCompatible")]
+        [UseClientSideCompatibleValidation]
         public async Task<IActionResult> Edit(EmployeeModel model)
         {
             if (!ModelState.IsValid)
@@ -57,12 +64,12 @@ namespace iTechArt.ManagementDemo.Web.Controllers
                 nameof(Edit), new { id });
         }
 
-        [HttpDelete, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);
 
-            return Ok();
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPut]

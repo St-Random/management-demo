@@ -3,7 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Management Demo</title>
+    <title>
+        @if (ViewData["Title"] != null)
+        {
+            @:@ViewData["Title"] - Management Demo
+        }
+        else
+        {
+            @:Management Demo
+        }
+    </title>
 
     @*<environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -29,9 +38,6 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Companies" asp-action="Index">Companies</a>
                         </li>
                         <li class="nav-item">
@@ -48,10 +54,18 @@
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
+            <partial name="_BreadCrumbs" />
+            @if (ViewData["Title"] != null)
+            {
+                <div class="text-md-center">
+                    <h4>@ViewData["Title"]</h4>
+                </div>
+                <hr />
+            }
             @RenderBody()
+            @RenderSection("Controls", required: false)
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2019 - Management Demo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

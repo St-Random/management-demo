@@ -1,53 +1,127 @@
 ﻿@model iTechArt.ManagementDemo.Web.Models.LocationModel
 
 @{
-    ViewData["Title"] = "Details";
+    var breadCrumbs =
+        new KeyValuePair<string, string>[]
+        {
+            KeyValuePair.Create(
+                Url.Action("Index", "Companies"), "Companies"),
+            KeyValuePair.Create(
+                Url.Action("Details", "Companies", new { id = Model.CompanyId }),
+                Model.CompanyName),
+            KeyValuePair.Create(
+                Url.Action(
+                    "Details",
+                    "Companies",
+                    new { id = Model.CompanyId },
+                    null,
+                    null,
+                    "Locations"),
+                "Locations"),
+            KeyValuePair.Create(
+                Url.Action("Details", new { id = Model.Id }),
+                Model.Name)
+        };
+
+    ViewData["Title"] = Model.Name + " Details";
+    ViewData["BreadCrumbs"] = breadCrumbs;
+
+    var employeesUrl = Url.Action("Employees", new { id = Model.Id });
+    var employeesNavUrl = Url.Action("Details", "Employees", new { id = 0 });
 }
 
-<h2>Details</h2>
-<h4>@Html.DisplayNameForModel()</h4>
-<hr />
-<div>
+<div class="offset-md-2 col-md-8">
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Fax)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Fax)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Comment)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Comment)
-        </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.CompanyName)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompanyName)
+        <dd class="col-sm-8">
+            <a asp-action="Details" asp-controller="Companies"
+               asp-route-id="@Model.CompanyId">
+                @Model.CompanyName
+            </a>
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Fax)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Fax)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Comment)
         </dd>
     </dl>
+    <div class="card">
+        <div class="card-header">
+            <h5>@Html.DisplayNameFor(m => m.Address)</h5>
+        </div>
+        <div class="card-body">
+            <partial name="_AddressDetails", for="Address">
+        </div>
+    </div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+
+<div class="text-md-center mt-3">
+    <h5 id="Employees">Local Employees</h5>
 </div>
+
+<partial name="_SearchTable" model="
+        new SearchTableViewModel<LocationEmployeeModel>(
+            employeesUrl, employeesNavUrl)" />
+
+@section Controls
+{
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group mr-auto"></div>
+
+    <form asp-action="Create" method="post">
+        @Html.HiddenFor(m => m.CompanyId)
+        @Html.HiddenFor(m => m.CompanyName)
+        <button type="submit" class="btn btn-primary mr-2">Create New</button>
+    </form>
+
+    <form method="post" asp-action="Clone" asp-route-id="@Model.Id">
+        <div class="form-row align-items-center mr-1">
+            <div class="col-auto">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" id="shouldTransferEmployees" value="True"
+                           class="custom-control-input" name="shouldTransferEmployees">
+                    <label class="custom-control-label" for="shouldTransferEmployees">
+                        Transfer employees
+                    </label>
+                </div>
+            </div>
+            <div class="col-auto pr-0">
+                <button type="submit" class="btn btn-primary">Clone</button>
+            </div>
+        </div>
+    </form>
+
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mr-1">Edit</a>
+
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div>
+}

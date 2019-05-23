@@ -1,46 +1,27 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    var breadCrumbs =
+        new KeyValuePair<string, string>[]
+        {
+            KeyValuePair.Create(
+                Url.Action("Index"), "Companies")
+        };
+
+    ViewData["Title"] = "Companies";
+    ViewData["BreadCrumbs"] = breadCrumbs;
+
+    var dataUrl = Url.Action("List");
+    var navUrl = Url.Action("Details", new { id = 0 });
 }
 
-<h2>Index</h2>
+<partial name="_SearchTable"
+    model="new SearchTableViewModel<CompanyQueryModel>(dataUrl, navUrl)" />
 
-<div id="test" class="table-striped table-bordered">
-</div>
-
-@section Scripts
+@section Controls
 {
-    <script>
-        $(function () {
-            var table = new Tabulator("#test", {
-                ajaxURL: "@Url.Action("List")",
-                ajaxConfig: "PUT",
-                ajaxContentType: {
-                    headers: {
-                        "Content-type": "application/json; charset=utf-8", //set specific content type
-                        "Accept": "application/json"
-                    },
-                    body: function (url, config, params) {
-                        console.log(url);
-                        console.log(config);
-                        console.log(params);
-
-                        return params;
-                    }
-                },
-                ajaxResponse: function (url, params, response) {
-                    return response.items;
-                },
-                layout: "fitColumns", //fit columns to width of table (optional)
-                columns: [ //Define Table Columns
-                    { title: "Name", field: "name" },
-                    { title: "Company Code", field: "companyCode"},
-                    { title: "Date Founded", field: "dateFounded" }
-                ],
-                rowClick: function (e, row) { //trigger an alert message when the row is clicked
-                    alert("Row " + row.getData().id + " Clicked!!!!");
-                },
-            });
-        });
-    </script>
+<div class="btn-toolbar mt-4" role="toolbar">
+    <div class="btn-group mr-auto"></div>
+    <form method="post" asp-action="Create">
+        <button type="submit" class="btn btn-primary">Create New</button>
+    </form>
+</div>
 }

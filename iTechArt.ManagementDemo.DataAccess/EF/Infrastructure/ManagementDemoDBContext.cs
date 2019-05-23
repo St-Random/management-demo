@@ -10,7 +10,7 @@ namespace iTechArt.ManagementDemo.DataAccess.EF.Infrastructure
 {
     internal class ManagementDemoDbContext : DbContext
     {
-        //// For migrations only
+        //// Hack for manual migrations only (otherwise I would have to install EF tools to MVC project)
         //private const string DEFAULT_CONNECTION =
         //    @"Data Source=.\SQLEXPRESS;Initial Catalog=ManagementDemo;Integrated Security=True";
 

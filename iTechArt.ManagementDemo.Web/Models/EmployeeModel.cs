@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using iTechArt.ManagementDemo.Web.Infrastructure.Binding;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,6 +8,9 @@ namespace iTechArt.ManagementDemo.Web.Models
     [Display(Name = "Employee")]
     public class EmployeeModel
     {
+        public string FullName =>
+            string.Join(" ", Patronymic, FirstName, MiddleInitial, LastName);
+
         [HiddenInput]
         public int Id { get; set; }
 
@@ -46,12 +50,14 @@ namespace iTechArt.ManagementDemo.Web.Models
         [DisplayFormat(NullDisplayText = "N/A")]
         public string Skype { get; set; }
 
-        [Display(Name = "Date of Birth")]
+        [Display(Name = "Date of Birth (UTC)")]
         [DisplayFormat(NullDisplayText = "N/A")]
+        [UtcBinder]
         public DateTime? DateOfBirth { get; set; }
 
-        [Display(Name = "Date of Employment")]
+        [Display(Name = "Date of Employment (UTC)")]
         [DisplayFormat(NullDisplayText = "N/A")]
+        [UtcBinder]
         public DateTime? DateOfEmployment { get; set; }
 
         [Display(Name = "Position")]
@@ -61,8 +67,7 @@ namespace iTechArt.ManagementDemo.Web.Models
         [Display(Name = "Salary, $")]
         [DisplayFormat(
             DataFormatString = "{0:C}",
-            NullDisplayText = "N/A",
-            ApplyFormatInEditMode = true)]
+            NullDisplayText = "N/A")]
         public decimal? SalaryInUSD { get; set; }
 
         [Display(Name = "Is Married")]

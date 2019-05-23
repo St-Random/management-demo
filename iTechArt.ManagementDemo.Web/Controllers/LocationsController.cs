@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using iTechArt.ManagementDemo.Web.Models;
 using iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors.Interfaces;
 using iTechArt.ManagementDemo.Web.Infrastructure.Filters;
-using FluentValidation.AspNetCore;
-using iTechArt.ManagementDemo.Querying;
+using iTechArt.ManagementDemo.Web.Infrastructure.Validators.Attributes;
 
 namespace iTechArt.ManagementDemo.Web.Controllers
 {
@@ -22,6 +17,7 @@ namespace iTechArt.ManagementDemo.Web.Controllers
             _service = service;
         }
 
+
         [HttpGet]
         [TreatNullAsNotFound]
         public async Task<IActionResult> Details(int id) =>
@@ -29,17 +25,24 @@ namespace iTechArt.ManagementDemo.Web.Controllers
 
         [HttpGet]
         [TreatNullAsNotFound]
-        [RuleSetForClientSideMessages("ClientCompatible")]
+        [UseClientSideCompatibleValidation]
         public async Task<IActionResult> Edit(int id) =>
             View(await _service.FindAsync(id));
 
         [HttpPost]
-        [RuleSetForClientSideMessages("ClientCompatible")]
-        public IActionResult Create() =>
-            View(nameof(Edit), new CompanyModel());
+        [UseClientSideCompatibleValidation]
+        public IActionResult Create(
+            int companyId = 0, string companyName = null) =>
+            View(
+                nameof(Edit),
+                new LocationModel
+                {
+                    CompanyId = companyId,
+                    CompanyName = companyName,
+                });
 
         [HttpPost, ValidateAntiForgeryToken]
-        [RuleSetForClientSideMessages("ClientCompatible")]
+        [UseClientSideCompatibleValidation]
         public async Task<IActionResult> Edit(LocationModel model)
         {
             if (!ModelState.IsValid)
@@ -53,12 +56,22 @@ namespace iTechArt.ManagementDemo.Web.Controllers
                 nameof(Edit), new { id });
         }
 
-        [HttpDelete, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _service.DeleteAsync(id);
+            var companyId = await _service.
+                TryDeleteLocationAndGetCompanyIdAsync(id);
 
-            return Ok();
+            if (!companyId.HasValue)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(
+                nameof(CompaniesController.Details),
+                "Companies",
+                new { id = companyId },
+                "Locations");
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -90,9 +103,9 @@ namespace iTechArt.ManagementDemo.Web.Controllers
                 nameof(Edit), new { id = destinationId });
         }
 
-        [HttpGet]
+        [HttpPut]
         public async Task<IActionResult> Employees(
-            int id, QueryOptions options) =>
+            int id, [FromBody]QueryOptionsModel options) =>
             Ok(await _service.QueryEmployeesAsync(id, options));
 
         [HttpGet]

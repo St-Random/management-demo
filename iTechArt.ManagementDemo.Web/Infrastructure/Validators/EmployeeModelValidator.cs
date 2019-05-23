@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using iTechArt.ManagementDemo.Web.Models;
 using iTechArt.ManagementDemo.Web.Infrastructure.Validators.Extensions;
+using iTechArt.ManagementDemo.Web.Infrastructure.Validators.Attributes;
 
 namespace iTechArt.ManagementDemo.Web.Infrastructure.Validators
 {
@@ -9,7 +10,7 @@ namespace iTechArt.ManagementDemo.Web.Infrastructure.Validators
         public EmployeeModelValidator()
         {
             RuleSet(
-                "ClientCompatible",
+                UseClientSideCompatibleValidationAttribute.RULESET,
                 () =>
                 {
                     RuleFor(e => e.FirstName)

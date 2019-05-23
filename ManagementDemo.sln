@@ -3,17 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.ManagementDemo.DataAccess", "iTechArt.ManagementDemo.DataAccess\iTechArt.ManagementDemo.DataAccess.csproj", "{0F3DFEE3-F943-4663-ADDF-22EF7B9E5C62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.ManagementDemo.DataAccess", "iTechArt.ManagementDemo.DataAccess\iTechArt.ManagementDemo.DataAccess.csproj", "{0F3DFEE3-F943-4663-ADDF-22EF7B9E5C62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.ManagementDemo.Services", "iTechArt.ManagementDemo.Services\iTechArt.ManagementDemo.Services.csproj", "{465899C3-B8F9-45EE-8E16-2DBB84F12F93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.ManagementDemo.Services", "iTechArt.ManagementDemo.Services\iTechArt.ManagementDemo.Services.csproj", "{465899C3-B8F9-45EE-8E16-2DBB84F12F93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.ManagementDemo.Entities", "iTechArt.ManagementDemo.Entities\iTechArt.ManagementDemo.Entities.csproj", "{BB53D37A-B458-43A4-B107-60E83621FBCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.ManagementDemo.Entities", "iTechArt.ManagementDemo.Entities\iTechArt.ManagementDemo.Entities.csproj", "{BB53D37A-B458-43A4-B107-60E83621FBCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.ManagementDemo.Web", "iTechArt.ManagementDemo.Web\iTechArt.ManagementDemo.Web.csproj", "{E1D764C6-7B4E-48FC-AC70-F3BC90084F06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.ManagementDemo.Web", "iTechArt.ManagementDemo.Web\iTechArt.ManagementDemo.Web.csproj", "{E1D764C6-7B4E-48FC-AC70-F3BC90084F06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{957321DC-7FA6-4C35-B870-EF1C765686F8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.ManagementDemo.Querying", "iTechArt.ManagementDemo.Querying\iTechArt.ManagementDemo.Querying.csproj", "{19D729BB-DC1E-41DA-A175-8C72E82034EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTechArt.ManagementDemo.Querying", "iTechArt.ManagementDemo.Querying\iTechArt.ManagementDemo.Querying.csproj", "{19D729BB-DC1E-41DA-A175-8C72E82034EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +35,6 @@ Global
 		{E1D764C6-7B4E-48FC-AC70-F3BC90084F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1D764C6-7B4E-48FC-AC70-F3BC90084F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1D764C6-7B4E-48FC-AC70-F3BC90084F06}.Release|Any CPU.Build.0 = Release|Any CPU
-		{957321DC-7FA6-4C35-B870-EF1C765686F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{957321DC-7FA6-4C35-B870-EF1C765686F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{957321DC-7FA6-4C35-B870-EF1C765686F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{957321DC-7FA6-4C35-B870-EF1C765686F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19D729BB-DC1E-41DA-A175-8C72E82034EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19D729BB-DC1E-41DA-A175-8C72E82034EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19D729BB-DC1E-41DA-A175-8C72E82034EA}.Release|Any CPU.ActiveCfg = Release|Any CPU

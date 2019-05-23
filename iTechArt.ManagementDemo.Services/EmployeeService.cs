@@ -7,7 +7,6 @@ using iTechArt.ManagementDemo.Services.DTO;
 using iTechArt.ManagementDemo.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.Services
@@ -35,6 +34,5 @@ namespace iTechArt.ManagementDemo.Services
         public async Task<IQueryResult<EmployeeQueryModel>> QueryAsync(
             IQueryOptions options) =>
             await _queryHandler.QueryAsync(options);
-
     }
 }

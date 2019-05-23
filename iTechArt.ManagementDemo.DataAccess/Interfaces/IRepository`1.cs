@@ -12,16 +12,11 @@ namespace iTechArt.ManagementDemo.DataAccess.Interfaces
         void Add(TEntity entity);
         Task AddAsync(TEntity entity);
 
-        void Update(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-
         void Remove(int id);
         Task RemoveAsync(int id);
 
+        void Update(TEntity entity);
         void Remove(TEntity entity);
-        Task RemoveAsync(TEntity entity);
-
         void RemoveRange(IEnumerable<TEntity> entities);
-        Task RemoveRangeAsync(IEnumerable<TEntity> entities);
     }
 }

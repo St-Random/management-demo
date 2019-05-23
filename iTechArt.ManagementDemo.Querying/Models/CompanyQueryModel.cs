@@ -10,34 +10,43 @@ namespace iTechArt.ManagementDemo.Querying.Models
 
         [AllowSort]
         [AllowSearch]
+        [DisplayInfo("Name")]
         public string Name { get; set; }
 
         [AllowSort]
         [AllowSearch]
+        [DisplayInfo("Code")]
         public string CompanyCode { get; set; }
 
         [AllowSort]
+        [DisplayInfo("Date Founded")]
         public DateTime? DateFounded { get; set; }
 
         [AllowSort]
         [AllowSearch]
+        [DisplayInfo("Email", Group = "Contact Info")]
         public string Email { get; set; }
 
         [AllowSort]
         [AllowSearch]
+        [DisplayInfo("Phone", Group = "Contact Info")]
         public string Phone { get; set; }
 
         [AllowSort]
         [AllowSearch]
+        [DisplayInfo("Fax", Group = "Contact Info")]
         public string Fax { get; set; }
 
-        [AllowSearch]
-        public string Comment { get; set; }
-
         [AllowSort]
+        [DisplayInfo("Locations")]
         public int LocationsCount { get; set; }
 
         [AllowSort]
+        [DisplayInfo("Employees")]
         public int EmployeesCount { get; set; }
+
+        [AllowSearch]
+        [DisplayInfo("Comment", IsVisible = false)]
+        public string Comment { get; set; }
     }
 }

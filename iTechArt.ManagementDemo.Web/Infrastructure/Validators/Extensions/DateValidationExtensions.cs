@@ -2,20 +2,11 @@
 using FluentValidation.Results;
 using iTechArt.ManagementDemo.Web.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.Web.Infrastructure.Validators.Extensions
 {
     public static class DateValidationExtensions
     {
-        //public static IRuleBuilderOptions<T, DateTime> UtcDate<T>(
-        //    this IRuleBuilder<T, DateTime> ruleBuilder) =>
-        //    ruleBuilder
-        //        .Must(d => d.Kind == DateTimeKind.Utc)
-        //    .WithMessage("Date must be specified in UTC format.");
-
         public static IRuleBuilderOptions<T, DateTime> DateInPast<T>(
             this IRuleBuilder<T, DateTime> ruleBuilder) =>
             ruleBuilder.LessThanOrEqualTo(DateTime.UtcNow);

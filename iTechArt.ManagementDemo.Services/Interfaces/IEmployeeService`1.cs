@@ -1,6 +1,5 @@
 ﻿using iTechArt.ManagementDemo.Querying;
 using iTechArt.ManagementDemo.Querying.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.Services.Interfaces

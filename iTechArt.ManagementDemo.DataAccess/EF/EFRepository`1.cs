@@ -36,13 +36,6 @@ namespace iTechArt.ManagementDemo.DataAccess.EF
         public void Update(TEntity entity) =>
             _dbSet.Update(entity);
 
-        public Task UpdateAsync(TEntity entity)
-        {
-            Update(entity);
-
-            return Task.CompletedTask;
-        }
-
         public void Remove(int id)
         {
             var entity = _dbSet.Find(id);
@@ -63,21 +56,8 @@ namespace iTechArt.ManagementDemo.DataAccess.EF
         public void Remove(TEntity entity) =>
             _dbSet.Remove(entity);
 
-        public Task RemoveAsync(TEntity entity)
-        {
-            Remove(entity);
-
-            return Task.CompletedTask;
-        }
-
         public void RemoveRange(IEnumerable<TEntity> entities) =>
             _dbSet.RemoveRange(entities);
 
-        public Task RemoveRangeAsync(IEnumerable<TEntity> entities)
-        {
-            RemoveRange(entities);
-
-            return Task.CompletedTask;
-        }
     }
 }

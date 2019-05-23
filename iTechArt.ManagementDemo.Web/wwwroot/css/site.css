@@ -10,7 +10,7 @@ a.navbar-brand {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+  font-size: 12px;
 }
 @media (min-width: 768px) {
   html {
@@ -53,4 +53,8 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
+}
+
+.tabulator {
+    font-size: 0.8rem;
 }

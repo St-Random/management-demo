@@ -2,13 +2,11 @@
 using iTechArt.ManagementDemo.Querying.Pagination;
 using iTechArt.ManagementDemo.Querying.Search;
 using iTechArt.ManagementDemo.Querying.Sort;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.Web.Models
 {
+    // For data binding
     public class QueryOptionsModel : IQueryOptions
     {
         public SearchOptions SearchOptions { get; set; }

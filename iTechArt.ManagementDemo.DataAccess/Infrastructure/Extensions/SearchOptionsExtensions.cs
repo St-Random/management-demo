@@ -27,14 +27,16 @@ namespace iTechArt.ManagementDemo.DataAccess.Infrastructure.Extensions
             appliedOptions =
                 new SearchOptions
                 {
-                    PropertyNames = options.PropertyNames
-                        .Where(
-                            name => propertiesToSearch.Contains(name))
-                        .ToList(),
-                    Term = options.Term ?? string.Empty
+                    PropertyNames = 
+                        (options.PropertyNames ?? Enumerable.Empty<string>())
+                            .Where(
+                                name => propertiesToSearch.Contains(name))
+                            .ToList(),
+                    Term = options.Term
                 };
 
-            if (!appliedOptions.PropertyNames.Any())
+            if (!appliedOptions.PropertyNames.Any()
+                || string.IsNullOrEmpty(appliedOptions.Term))
             {
                 return query;
             }

@@ -1,17 +1,67 @@
 ﻿@model iTechArt.ManagementDemo.Web.Models.LocationModel
 
 @{
-    ViewData["Title"] = "Edit";
+    var breadCrumbs =
+        new List<KeyValuePair<string, string>>
+        {
+KeyValuePair.Create(
+Url.Action("Index", "Companies"), "Companies"),
+        };
+
+    if (Model.CompanyId != 0
+        && !string.IsNullOrEmpty(Model.CompanyName))
+    {
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                Url.Action("Details", "Companies", new { id = Model.CompanyId }),
+                Model.CompanyName));
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                Url.Action(
+                    "Details",
+                    "Companies",
+                    new { id = Model.CompanyId },
+                    null,
+                    null,
+                    "Locations"),
+                "Locations"));
+    }
+
+    if (Model.Id != 0)
+    {
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                Url.Action("Details", new { id = Model.Id }),
+                Model.Name ?? "New Location"));
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                Url.Action("Edit", new { id = Model.Id }),
+                "Edit"));
+        ViewData["Title"] = Model.Name + " Details";
+    }
+    else
+    {
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                string.Empty, "New Location"));
+        ViewData["Title"] = "Create New Location";
+    }
+
+    ViewData["BreadCrumbs"] = breadCrumbs;
 }
 
-<h2>Edit</h2>
-<h4>@Html.DisplayNameForModel()</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="offset-md-3 col-md-6">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @Html.HiddenFor(m => m.Id)
+            <div class="form-group">
+                @Html.HiddenFor(m => m.CompanyId)
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control"
+                       data-autocomplete-url="@Url.Action("Autocomplete", "Companies", new { companyId = Model.CompanyId })" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -37,12 +87,46 @@
                 <textarea asp-for="Comment" class="form-control"></textarea>
                 <span asp-validation-for="Comment" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                @Html.HiddenFor(m => m.CompanyId)
-                <label asp-for="CompanyName" class="control-label"></label>
-                <input asp-for="CompanyName" class="form-control"
-                    data-autocomplete-url="@Url.Action("Autocomplete", "Companies", new { companyId = Model.CompanyId })" />
-                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>@Html.DisplayNameFor(m => m.Address)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label asp-for="Address.Country" class="control-label"></label>
+                                <input asp-for="Address.Country" class="form-control" />
+                                <span asp-validation-for="Address.Country" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address.Area" class="control-label"></label>
+                                <input asp-for="Address.Area" class="form-control" />
+                                <span asp-validation-for="Address.Area" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address.City" class="control-label"></label>
+                                <input asp-for="Address.City" class="form-control" />
+                                <span asp-validation-for="Address.City" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address.AddressLine1" class="control-label"></label>
+                                <input asp-for="Address.AddressLine1" class="form-control" />
+                                <span asp-validation-for="Address.AddressLine1" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address.AddressLine2" class="control-label"></label>
+                                <input asp-for="Address.AddressLine2" class="form-control" />
+                                <span asp-validation-for="Address.AddressLine2" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address.PostalCode" class="control-label"></label>
+                                <input asp-for="Address.PostalCode" class="form-control" />
+                                <span asp-validation-for="Address.PostalCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -51,7 +135,41 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@if (Model.Id != 0)
+{
+    @section Controls
+    {
+        <div class="btn-toolbar mt-4" role="toolbar">
+            <div class="btn-group mr-auto"></div>
 
+            <form asp-action="Create" method="post">
+                @Html.HiddenFor(m => m.CompanyId)
+                @Html.HiddenFor(m => m.CompanyName)
+                <button type="submit" class="btn btn-primary mr-2">Create New</button>
+            </form>
+
+            <form method="post" asp-action="Clone" asp-route-id="@Model.Id">
+                <div class="form-row align-items-center mr-1">
+                    <div class="col-auto">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="shouldTransferEmployees" value="True"
+                                   class="custom-control-input" name="shouldTransferEmployees">
+                            <label class="custom-control-label" for="shouldTransferEmployees">
+                                Transfer employees
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-auto pr-0">
+                        <button type="submit" class="btn btn-primary">Clone</button>
+                    </div>
+                </div>
+            </form>
+
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mr-1">Edit</a>
+
+            <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    }
+}

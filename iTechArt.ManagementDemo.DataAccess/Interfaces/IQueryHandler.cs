@@ -21,7 +21,6 @@ namespace iTechArt.ManagementDemo.DataAccess.Interfaces
 
         IEnumerable<TModel> Get(
             Expression<Func<TEntity, bool>> filter = null);
-
         Task<IEnumerable<TModel>> GetAsync(
             Expression<Func<TEntity, bool>> filter = null);
 

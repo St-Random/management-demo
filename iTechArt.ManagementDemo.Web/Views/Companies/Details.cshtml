@@ -1,59 +1,103 @@
 ﻿@model iTechArt.ManagementDemo.Web.Models.CompanyModel
 
 @{
-    ViewData["Title"] = "Details";
+    var breadCrumbs =
+        new KeyValuePair<string, string>[]
+        {
+    KeyValuePair.Create(Url.Action("Index"), "Companies"),
+    KeyValuePair.Create(
+        Url.Action("Details", new { id = Model.Id }),
+        Model.Name)
+        };
+
+    ViewData["Title"] = Model.Name + " Details";
+    ViewData["BreadCrumbs"] = breadCrumbs;
+
+    var locationsUrl = Url.Action("Locations", new { id = Model.Id });
+    var locationsNavUrl = Url.Action("Details", "Locations", new { id = 0 });
+    var employeesUrl = Url.Action("Employees", new { id = Model.Id });
+    var employeesNavUrl = Url.Action("Details", "Employees", new { id = 0 });
 }
 
-<h2>Details</h2>
-<h4>@Html.DisplayNameForModel()</h4>
-<hr />
-<div>
+<div class="offset-md-2 col-md-8">
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.CompanyCode)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.CompanyCode)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.DateFounded)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.DateFounded)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Phone)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Phone)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Fax)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Fax)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Comment)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Comment)
         </dd>
     </dl>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+<hr />
+<div class="text-md-center">
+    <h5 id="Locations">Company Locations</h5>
 </div>
+<partial name="_SearchTable"
+    model="new SearchTableViewModel<CompanyLocationModel>(
+        locationsUrl, locationsNavUrl)" />
+<div class="text-md-center">
+    <h5 id="Employees">Company Employees</h5>
+</div>
+<partial name="_SearchTable"
+    model="new SearchTableViewModel<CompanyEmployeeModel>(
+        employeesUrl, employeesNavUrl)" />
+
+@section Controls
+{
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group mr-auto"></div>
+
+        <form asp-action="Create" method="post" asp-controller="Locations">
+            <input type="hidden" name="CompanyId" value="@Model.Id" />
+            <input type="hidden" name="CompanyName" value="@Model.Name" />
+            <button type="submit" class="btn btn-primary mr-1">Add Location</button>
+        </form>
+
+        <form asp-action="Create" method="post">
+            <button type="submit" class="btn btn-primary mr-1">Create New</button>
+        </form>
+
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mr-1">Edit</a>
+
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+}

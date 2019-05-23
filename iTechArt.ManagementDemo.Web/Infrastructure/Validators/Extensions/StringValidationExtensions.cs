@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 
 namespace iTechArt.ManagementDemo.Web.Infrastructure.Validators.Extensions
 {
     public static class StringValidationExtensions
     {
-        // For 100% BL compatibility
+        // A dirty hack for 100% BL check compatibility
         private static readonly PhoneAttribute PhoneAttribute
             = new PhoneAttribute();
 

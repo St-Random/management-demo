@@ -1,17 +1,58 @@
-﻿@model iTechArt.ManagementDemo.Web.Models.EmployeeModel
+﻿@using SexModel = iTechArt.ManagementDemo.Web.Models.Sex;
+
+@model iTechArt.ManagementDemo.Web.Models.EmployeeModel
 
 @{
-    ViewData["Title"] = "Edit";
+    var breadCrumbs =
+        new List<KeyValuePair<string, string>>
+        {
+            KeyValuePair.Create(
+                Url.Action("Index"), "Employees"),
+        };
+
+    if (Model.Id != 0)
+    {
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                Url.Action("Details", new { id = Model.Id }),
+                Model.FullName));
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                Url.Action("Edit", new { id = Model.Id }), "Edit"));
+
+        ViewData["Title"] = "Edit " + Model.FullName;
+    }
+    else
+    {
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                string.Empty, "New Employee"));
+        ViewData["Title"] = "Create New Employee";
+    }
+
+    ViewData["BreadCrumbs"] = breadCrumbs;
 }
 
-<h2>Edit</h2>
-<h4>@Html.DisplayNameForModel()</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="offset-md-3 col-md-6">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @Html.HiddenFor(m => m.Id)
+            <div class="form-group">
+                @Html.HiddenFor(m => m.CompanyId)
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control"
+                       data-autocomplete-url="@Url.Action("Autocomplete", "Companies")" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.HiddenFor(m => m.LocationId)
+                <label asp-for="LocationName" class="control-label"></label>
+                <input asp-for="LocationName" class="form-control"
+                       data-autocomplete-url="@Url.Action("Autocomplete", "Locations")"
+                       data-autocomplete-dependency="@nameof(Model.CompanyId)" />
+                <span asp-validation-for="LocationName" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -32,10 +73,34 @@
                 <input asp-for="Patronymic" class="form-control" />
                 <span asp-validation-for="Patronymic" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Sex" class="control-label"></label>
-                <input asp-for="Sex" class="form-control" />
-                <span asp-validation-for="Sex" class="text-danger"></span>
+            <div class="form-group row">
+                <div class="col-form-label col-md-2 pt-0">
+                    @Html.DisplayNameFor(m => m.Sex)
+                </div>
+                <div class="col-md-10">
+                    <div class="custom-control custom-radio">
+                        @Html.RadioButtonFor(
+                            m => m.Sex, SexModel.Unspecified, new { id="Sex1", @class = "custom-control-input" })
+                        <label class="custom-control-label" for="Sex1">
+                            @SexModel.Unspecified
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        @Html.RadioButtonFor(
+                            m => m.Sex, SexModel.Female, new { id="Sex2", @class = "custom-control-input" })
+                        <label class="custom-control-label" for="Sex2">
+                            @SexModel.Female
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        @Html.RadioButtonFor(
+                            m => m.Sex, SexModel.Male, new { id="Sex3", @class = "custom-control-input" })
+                        <label class="custom-control-label" for="Sex3">
+                            @SexModel.Male
+                        </label>
+                    </div>
+                    <span asp-validation-for="Sex" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
@@ -77,35 +142,54 @@
                 <input asp-for="SalaryInUSD" class="form-control" />
                 <span asp-validation-for="SalaryInUSD" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="IsMarried" class="control-label"></label>
-                <input asp-for="IsMarried" class="form-control" />
-                <span asp-validation-for="IsMarried" class="text-danger"></span>
+            <div class="form-group row">
+                <div class="col-form-label col-md-4 pt-0">
+                    @Html.DisplayNameFor(m => m.IsMarried)
+                </div>
+                <div class="col-md-8">
+                    <div class="custom-control custom-radio">
+                        @Html.RadioButtonFor(
+                            m => m.IsMarried, true, new { id="Married1", @class = "custom-control-input" })
+                        <label class="custom-control-label" for="Married1">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        @Html.RadioButtonFor(
+                            m => m.IsMarried, false, new { id="Married2", @class = "custom-control-input" })
+                        <label class="custom-control-label" for="Married2">
+                            No
+                        </label>
+                    </div>
+                    <span asp-validation-for="IsMarried" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="HasChildren" class="control-label"></label>
-                <input asp-for="HasChildren" class="form-control" />
-                <span asp-validation-for="HasChildren" class="text-danger"></span>
+            <div class="form-group row">
+                <div class="col-form-label col-md-4 pt-0">
+                    @Html.DisplayNameFor(m => m.HasChildren)
+                </div>
+                <div class="col-md-8">
+                    <div class="custom-control custom-radio">
+                        @Html.RadioButtonFor(
+                            m => m.HasChildren, true, new { id="Children1", @class = "custom-control-input" })
+                        <label class="custom-control-label" for="Children1">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        @Html.RadioButtonFor(
+                            m => m.HasChildren, false, new { id="Children2", @class = "custom-control-input" })
+                        <label class="custom-control-label" for="Children2">
+                            No
+                        </label>
+                    </div>
+                    <span asp-validation-for="HasChildren" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Comment" class="control-label"></label>
                 <textarea asp-for="Comment" class="form-control"></textarea>
                 <span asp-validation-for="Comment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.HiddenFor(m => m.CompanyId)
-                <label asp-for="CompanyName" class="control-label"></label>
-                <input asp-for="CompanyName" class="form-control"
-                    data-autocomplete-url="@Url.Action("Autocomplete", "Companies")" />
-                <span asp-validation-for="CompanyName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.HiddenFor(m => m.LocationId, new { data_autocomplete_id = true })
-                <label asp-for="LocationName" class="control-label"></label>
-                <input asp-for="LocationName" class="form-control"
-                    data-autocomplete-url="@Url.Action("Autocomplete", "Locations")"
-                    data-autocomplete-dependency="@nameof(Model.CompanyId)" />
-                <span asp-validation-for="LocationName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -114,7 +198,25 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@if (Model.Id != 0)
+{
+    @section Controls
+    {
+        <hr />
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group mr-auto"></div>
 
+            <form method="post" asp-action="Create">
+                @Html.HiddenFor(m => m.CompanyId)
+                @Html.HiddenFor(m => m.CompanyName)
+                @Html.HiddenFor(m => m.LocationId)
+                @Html.HiddenFor(m => m.LocationName)
+                <button type="submit" class="btn btn-primary mr-1">Create New</button>
+            </form>
+
+            <form method="post" asp-action="Delete" asp-route-id="@Model.Id">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    }
+}

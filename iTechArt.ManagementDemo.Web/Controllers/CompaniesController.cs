@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using iTechArt.ManagementDemo.Web.Models;
 using iTechArt.ManagementDemo.Web.Infrastructure.ServiceAdaptors.Interfaces;
 using iTechArt.ManagementDemo.Web.Infrastructure.Filters;
-using iTechArt.ManagementDemo.Querying;
-using FluentValidation.AspNetCore;
+using iTechArt.ManagementDemo.Web.Infrastructure.Validators.Attributes;
 
 namespace iTechArt.ManagementDemo.Web.Controllers
 {
@@ -29,17 +28,17 @@ namespace iTechArt.ManagementDemo.Web.Controllers
 
         [HttpGet]
         [TreatNullAsNotFound]
-        [RuleSetForClientSideMessages("ClientCompatible")]
+        [UseClientSideCompatibleValidation]
         public async Task<IActionResult> Edit(int id) =>
             View(await _service.FindAsync(id));
 
         [HttpPost]
-        [RuleSetForClientSideMessages("ClientCompatible")]
+        [UseClientSideCompatibleValidation]
         public IActionResult Create() =>
             View(nameof(Edit), new CompanyModel());
 
         [HttpPost, ValidateAntiForgeryToken]
-        [RuleSetForClientSideMessages("ClientCompatible")]
+        [UseClientSideCompatibleValidation]
         public async Task<IActionResult> Edit(CompanyModel model)
         {
             if (!ModelState.IsValid)
@@ -53,27 +52,28 @@ namespace iTechArt.ManagementDemo.Web.Controllers
                 nameof(Edit), new { id });
         }
 
-        [HttpDelete, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);
 
-            return Ok();
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPut]
-        public async Task<IActionResult> List(QueryOptions options) =>
+        public async Task<IActionResult> List(
+            [FromBody]QueryOptionsModel options) =>
             Ok(await _service.QueryAsync(options));
 
-        [HttpGet]
+        [HttpPut]
         public async Task<IActionResult> Locations(
-            int id, QueryOptions options) =>
-            Ok(await _service.QueryLocationsAsync(id, null));
+            int id, [FromBody]QueryOptionsModel options) =>
+            Ok(await _service.QueryLocationsAsync(id, options));
 
-        [HttpGet]
+        [HttpPut]
         public async Task<IActionResult> Employees(
-            int id, QueryOptions options) =>
-            Ok(await _service.QueryEmployeesAsync(id, null));
+            int id, [FromBody]QueryOptionsModel options) =>
+            Ok(await _service.QueryEmployeesAsync(id, options));
 
         [HttpGet]
         public async Task<IActionResult> Autocomplete() =>

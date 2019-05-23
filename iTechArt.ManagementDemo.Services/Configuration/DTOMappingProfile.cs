@@ -10,6 +10,7 @@ namespace iTechArt.ManagementDemo.Services.Configuration
         {
             CreateMap<Address, AddressDTO>();
             CreateMap<AddressDTO, Address>();
+            CreateMap<Address, Address>();
 
             CreateMap<Company, CompanyDTO>();
             CreateMap<CompanyDTO, Company>();
@@ -35,7 +36,10 @@ namespace iTechArt.ManagementDemo.Services.Configuration
                         e => (Entities.Sex)e.Sex));
 
             // For cloning
-            CreateMap<Location, Location>();
+            CreateMap<Location, Location>()
+                .ForMember(
+                    l => l.Employees,
+                    opt => opt.Ignore());
             CreateMap<Location, LocationDTO>()
                 .ForMember(
                     l => l.CompanyName,

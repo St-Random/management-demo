@@ -54,7 +54,7 @@ namespace iTechArt.ManagementDemo.DataAccess.EF
 
         public void Dispose()
         {
-            // I'll actually try to use pooling
+            // I'll actually try to use DbContext pooling
             // _context.Dispose();
         }
 

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace iTechArt.ManagementDemo.Services.Interfaces
 {
+    /* This services were extracted to simplify implementation
+     * of service adapters (this is not smth I would typically do,
+     * but felt reasonable for a project like this) */
     public interface ICompanyService<TCompanyDTO> : IService<TCompanyDTO>
     {
         Task<IQueryResult<CompanyQueryModel>> QueryAsync(

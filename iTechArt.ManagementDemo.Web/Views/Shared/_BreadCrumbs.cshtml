@@ -1,0 +1,35 @@
+﻿@{
+    var breadCrumbs =
+        new List<KeyValuePair<string, string>>
+        {
+            KeyValuePair.Create(
+                Url.Action("Index", "Home"), "Home")
+        };
+
+    var additionalBreadCrumbs = ViewData["BreadCrumbs"]
+        as IEnumerable<KeyValuePair<string, string>>;
+
+    if (additionalBreadCrumbs != null && additionalBreadCrumbs.Any())
+    {
+        breadCrumbs.AddRange(additionalBreadCrumbs);
+    }
+
+    var activeBreadCrumbs = breadCrumbs.Take(breadCrumbs.Count - 1);
+}
+
+@if (breadCrumbs != null && breadCrumbs.Count > 1)
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @foreach (var item in activeBreadCrumbs)
+            {
+                <li class="breadcrumb-item" aria-current="page">
+                    <a href="@item.Key">@item.Value</a>
+                </li>
+            }
+            <li class="breadcrumb-item active" aria-current="page">
+                @breadCrumbs.Last().Value
+            </li>
+        </ol>
+    </nav>
+}

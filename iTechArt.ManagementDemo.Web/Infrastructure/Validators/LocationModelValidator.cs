@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using iTechArt.ManagementDemo.Web.Infrastructure.Validators.Attributes;
 using iTechArt.ManagementDemo.Web.Infrastructure.Validators.Extensions;
 using iTechArt.ManagementDemo.Web.Models;
 
@@ -9,16 +10,12 @@ namespace iTechArt.ManagementDemo.Web.Infrastructure.Validators
         public LocationModelValidator()
         {
             RuleSet(
-                "ClientCompatible",
+                UseClientSideCompatibleValidationAttribute.RULESET,
                 () =>
                 {
                     RuleFor(l => l.Name)
                         .NotEmpty()
                         .DefaultLength();
-
-                    RuleFor(l => l.Address)
-                        .NotNull()
-                        .SetValidator(new AddressModelValidator());
 
                     RuleFor(l => l.Email)
                         .EmailAddress()
@@ -33,6 +30,10 @@ namespace iTechArt.ManagementDemo.Web.Infrastructure.Validators
                     RuleFor(l => l.Comment)
                         .DefaultLength();
                 });
+
+            RuleFor(l => l.Address)
+                .NotNull()
+                .SetValidator(new AddressModelValidator());
 
             RuleFor(l => l.Phone)
                 .PhoneNumber();

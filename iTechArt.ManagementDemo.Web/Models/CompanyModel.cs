@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using iTechArt.ManagementDemo.Web.Infrastructure.Binding;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace iTechArt.ManagementDemo.Web.Models
@@ -17,8 +19,9 @@ namespace iTechArt.ManagementDemo.Web.Models
         [DisplayFormat(NullDisplayText = "N/A")]
         public string CompanyCode { get; set; }
 
-        [Display(Name = "Date Founded")]
+        [Display(Name = "Date Founded (UTC)")]
         [DisplayFormat(NullDisplayText = "N/A")]
+        [UtcBinder]
         public DateTime? DateFounded { get; set; }
 
         [Display(Name = "Email")]

@@ -1,14 +1,40 @@
 ﻿@model iTechArt.ManagementDemo.Web.Models.CompanyModel
 
 @{
-    ViewData["Title"] = "Edit";
+    var breadCrumbs =
+        new List<KeyValuePair<string, string>>
+        {
+            KeyValuePair.Create(
+                Url.Action("Index"), "Companies"),
+        };
+
+    if (Model.Id != 0)
+    {
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                Url.Action("Details", new { id = Model.Id }),
+                Model.Name));
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                Url.Action("Edit", new { id = Model.Id }),
+                "Edit"));
+
+        ViewData["Title"] = "Edit " + Model.Name;
+    }
+    else
+    {
+        breadCrumbs.Add(
+            KeyValuePair.Create(
+                string.Empty, "New Company"));
+
+        ViewData["Title"] = "Create New Company";
+    }
+
+    ViewData["BreadCrumbs"] = breadCrumbs;
 }
 
-<h2>Edit</h2>
-<h4>@Html.DisplayNameForModel()</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="offset-md-3 col-md-6">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @Html.HiddenFor(m => m.Id)
@@ -54,6 +80,27 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@if (Model.Id != 0)
+{
+    @section Controls
+    {
+        <hr />
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group mr-auto"></div>
+
+            <form asp-action="Create" method="post" asp-controller="Locations">
+                <input type="hidden" name="CompanyId" value="@Model.Id" />
+                <input type="hidden" name="CompanyName" value="@Model.Name" />
+                <button type="submit" class="btn btn-primary mr-1">Add Location</button>
+            </form>
+
+            <form method="post" asp-action="Create">
+                <button type="submit" class="btn btn-primary mr-1">Create New</button>
+            </form>
+
+            <form method="post" asp-action="Delete" asp-route-id="@Model.Id">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    }
+}

@@ -7,6 +7,5 @@ namespace iTechArt.ManagementDemo.Querying.Attributes
         AllowMultiple = false,
         Inherited = true)]
     public class AllowSortAttribute : Attribute
-    {
-    }
+    { }
 }

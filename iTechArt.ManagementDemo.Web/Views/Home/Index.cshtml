@@ -1,8 +1,27 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+﻿<div>
+    <h1 class="display-4 text-center">Welcome</h1>
+    <p>
+        This is demo application for basic 3-Layer architecture
+        that uses <strong>ASP.NET Core 2.2 MVC</strong>, <strong>EF Core 2.2</strong>, <strong>Automapper</strong>,
+        and <strong>Fluent Validation</strong>. Frontend is quite basic and uses server rendering,
+        <strong>jQuery</strong>, <a href="http://tabulator.info/">Tabulator</a> plugin for tables,
+        and <strong>EasyAutocomplete</strong> pluging for autocompletes.
+        There is no package manager for js libs and VS default bundler is used for
+        bundling and minification (see <em>bundleconfig.json</em>). Beware cause it doesn't support arrow functions.
+    </p>
+    <p>
+        If you run application for the first time, you can create database & seed it with
+        test data by changing <strong>ApplyMigrationsOnStartup</strong> setting to <em>true</em>.
+        By default application is configured to use local <strong>SQL Express</strong> installation.
+        You can also enable SQL queries Interception/Logging to Debug console by setting <strong>LogSqlQueries</strong>
+        parameter to <em>true</em>.
+    </p>
+    <p>
+        Tables support search (case-insensitive contains on string properties), multiple sort and pagination.
+        <ul>
+            <li>You can select columns for a search by pressing button to the right of the <em>Search</em> button.</li>
+            <li>You can sort by mutiple columns by clicking column header with <strong>Ctrl+Shift</strong> keys pressed.</li>
+            <li>You can also navigate to corresponding details pages by clicking table rows (they will open in new tab/window).</li>
+        </ul>
+    </p>
 </div>

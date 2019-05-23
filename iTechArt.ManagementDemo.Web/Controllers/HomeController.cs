@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using iTechArt.ManagementDemo.Web.Models;
-using iTechArt.ManagementDemo.Web.Infrastructure.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace iTechArt.ManagementDemo.Web.Controllers
 {

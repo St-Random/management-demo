@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using iTechArt.ManagementDemo.Entities;
 using iTechArt.ManagementDemo.Querying.Models;
+using System.Linq;
 
 namespace iTechArt.ManagementDemo.DataAccess.Configuration
 {
@@ -8,7 +9,13 @@ namespace iTechArt.ManagementDemo.DataAccess.Configuration
     {
         public QueryModelsMappingProfile()
         {
-            CreateMap<Company, CompanyQueryModel>();
+            CreateMap<Company, CompanyQueryModel>()
+                .ForMember(
+                    c => c.EmployeesCount,
+                    opt => opt.MapFrom(
+                        c => c.Locations
+                            .SelectMany(l => l.Employees)
+                            .Count()));
 
             CreateMap<Company, NamedQueryModel>();
 

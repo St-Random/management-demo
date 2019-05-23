@@ -1,125 +1,157 @@
 ﻿@model iTechArt.ManagementDemo.Web.Models.EmployeeModel
 
 @{
-    ViewData["Title"] = "Details";
+    var breadCrumbs =
+        new KeyValuePair<string, string>[]
+        {
+            KeyValuePair.Create(
+                Url.Action("Index"), "Employees"),
+            KeyValuePair.Create(
+                Url.Action("Details", new { id = Model.Id }),
+                Model.FullName)
+        };
+
+    ViewData["Title"] = Model.FullName + " Details";
+    ViewData["BreadCrumbs"] = breadCrumbs;
 }
 
-<h2>Details</h2>
-<h4>@Html.DisplayNameForModel()</h4>
-<hr />
-<div>
+<div class="offset-md-2 col-md-8">
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MiddleInitial)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MiddleInitial)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patronymic)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patronymic)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sex)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sex)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Skype)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Skype)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateOfEmployment)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateOfEmployment)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Position)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Position)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SalaryInUSD)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SalaryInUSD)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IsMarried)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IsMarried)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HasChildren)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.HasChildren)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Comment)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Comment)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.LocationName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LocationName)
-        </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.CompanyName)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompanyName)
+        <dd class="col-sm-8">
+            <a asp-action="Details" asp-controller="Companies"
+               asp-route-id="@Model.CompanyId">
+                @Model.CompanyName
+            </a>
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.LocationName)
+        </dt>
+        <dd class="col-sm-8">
+            <a asp-action="Details" asp-controller="Locations"
+               asp-route-id="@Model.LocationId">
+                @Model.LocationName
+            </a>
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.MiddleInitial)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.MiddleInitial)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Patronymic)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Patronymic)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Sex)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Sex)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Skype)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Skype)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.DateOfEmployment)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.DateOfEmployment)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Position)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Position)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.SalaryInUSD)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.SalaryInUSD)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.IsMarried)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.IsMarried)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.HasChildren)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.HasChildren)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Comment)
         </dd>
     </dl>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+
+@section Controls
+{
+<hr />
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group mr-auto"></div>
+
+    <form method="post" asp-action="Create">
+        @Html.HiddenFor(m => m.CompanyId)
+        @Html.HiddenFor(m => m.CompanyName)
+        @Html.HiddenFor(m => m.LocationId)
+        @Html.HiddenFor(m => m.LocationName)
+        <button type="submit" class="btn btn-primary mr-1">Create New</button>
+    </form>
+
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mr-1">Edit</a>
+
+    <form method="post" asp-action="Delete" asp-route-id="@Model.Id">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
 </div>
+}

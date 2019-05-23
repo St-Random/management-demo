@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using iTechArt.ManagementDemo.Web.Infrastructure.Validators.Attributes;
 using iTechArt.ManagementDemo.Web.Infrastructure.Validators.Extensions;
 using iTechArt.ManagementDemo.Web.Models;
 
@@ -9,7 +10,7 @@ namespace iTechArt.ManagementDemo.Web.Infrastructure.Validators
         public CompanyModelValidator()
         {
             RuleSet(
-                "ClientCompatible",
+                UseClientSideCompatibleValidationAttribute.RULESET,
                 () =>
                 {
                     RuleFor(c => c.Name)
@@ -41,7 +42,6 @@ namespace iTechArt.ManagementDemo.Web.Infrastructure.Validators
 
             RuleFor(c => c.Fax)
                 .PhoneNumber();
-
         }
     }
 }

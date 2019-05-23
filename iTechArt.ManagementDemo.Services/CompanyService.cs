@@ -54,7 +54,7 @@ namespace iTechArt.ManagementDemo.Services
         public async Task<IQueryResult<CompanyLocationModel>>
             QueryLocationsAsync(int companyId, IQueryOptions options) =>
             await _locationQueryHandler.QueryAsync(
-                options, l => l.Id == companyId);
+                options, l => l.CompanyId == companyId);
 
         public async Task<IQueryResult<CompanyEmployeeModel>>
             QueryEmployeesAsync(int companyId, IQueryOptions options) =>
